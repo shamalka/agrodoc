@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "692482082409",
+    "firebase_url": "https://agrodocv2.firebaseio.com",
+    "project_id": "agrodocv2",
+    "storage_bucket": "agrodocv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692482082409:android:4c6891781c47bd1f",
+        "android_client_info": {
+          "package_name": "com.snov.agrodoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692482082409-kkgeq4lm0lpoepo3tsofd5ted000q5gu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snov.agrodoc",
+            "certificate_hash": "018529c910c391cf519baf31b9a580a3bb5ed541"
+          }
+        },
+        {
+          "client_id": "692482082409-dsean92252prds6tdn9b3si75fktr2v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBynUJDQ-gfSc1HjReefazRPnERMjOD4-M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692482082409-dsean92252prds6tdn9b3si75fktr2v5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

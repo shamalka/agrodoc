@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Firebase Login"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:gravity="center" />
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        />
+
+
+
+    <Button
+        android:id="@+id/logout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Text"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:textSize="18sp" />
+
+</LinearLayout>

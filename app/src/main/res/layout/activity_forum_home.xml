@@ -24,124 +24,124 @@
         android:textColor="#000000"
         />
 
-    <!--<ListView-->
-        <!--android:id="@+id/discussion_list"-->
-        <!--android:layout_below="@id/recent_txt"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <ListView
+        android:id="@+id/discussion_list"
+        android:layout_below="@id/recent_txt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!--</ListView>-->
+    </ListView>
 
 
 
-    <android.support.v7.widget.CardView
-            android:id="@+id/discussion_item_card"
-            android:layout_below="@+id/recent_txt"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="5dp">
+    <!--<android.support.v7.widget.CardView-->
+            <!--android:id="@+id/discussion_item_card"-->
+            <!--android:layout_below="@+id/recent_txt"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="160dp"-->
+            <!--android:layout_margin="10dp"-->
+            <!--app:cardCornerRadius="5dp">-->
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
 
-                <LinearLayout
-                    android:id="@+id/topic_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/topic_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="A"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginLeft="7dp"
-                        />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="A"-->
+                        <!--android:layout_marginTop="7dp"-->
+                        <!--android:layout_marginLeft="7dp"-->
+                        <!--/>-->
 
-                    <TextView
-                        android:id="@+id/discussion_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Discussion"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginLeft="5dp"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/discussion_type"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Discussion"-->
+                        <!--android:layout_marginTop="7dp"-->
+                        <!--android:layout_marginLeft="5dp"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="by"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginLeft="5dp"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="by"-->
+                        <!--android:layout_marginTop="7dp"-->
+                        <!--android:layout_marginLeft="5dp"/>-->
 
-                    <TextView
-                        android:id="@+id/username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="UserName"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginLeft="5dp"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/username"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="UserName"-->
+                        <!--android:layout_marginTop="7dp"-->
+                        <!--android:layout_marginLeft="5dp"/>-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-                <TextView
-                    android:id="@+id/discussion_body"
-                    android:layout_below="@+id/topic_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="Discussion Body"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginLeft="5dp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/discussion_body"-->
+                    <!--android:layout_below="@+id/topic_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="60dp"-->
+                    <!--android:text="Discussion Body"-->
+                    <!--android:layout_marginTop="7dp"-->
+                    <!--android:layout_marginLeft="5dp"/>-->
 
-                <TextView
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
-                    android:id="@+id/seemore"
-                    android:layout_below="@+id/discussion_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="See More"
-                    android:gravity="right"
-                    android:textSize="13dp"
-                    />
+                <!--<TextView-->
+                    <!--android:layout_marginLeft="7dp"-->
+                    <!--android:layout_marginRight="7dp"-->
+                    <!--android:id="@+id/seemore"-->
+                    <!--android:layout_below="@+id/discussion_body"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="See More"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textSize="13dp"-->
+                    <!--/>-->
 
-                <TextView
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginBottom="5dp"
-                    android:id="@+id/date"
-                    android:layout_below="@+id/seemore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="2019/03/08"
-                    android:textSize="8dp"/>
+                <!--<TextView-->
+                    <!--android:layout_marginLeft="7dp"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:id="@+id/date"-->
+                    <!--android:layout_below="@+id/seemore"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="2019/03/08"-->
+                    <!--android:textSize="8dp"/>-->
 
-                <LinearLayout
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_below="@+id/date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_marginLeft="4dp"-->
+                    <!--android:layout_marginRight="4dp"-->
+                    <!--android:layout_marginBottom="4dp"-->
+                    <!--android:layout_below="@+id/date"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Like"
-                        android:background="@color/ForumCommentButton"/>
+                    <!--<Button-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:text="Like"-->
+                        <!--android:background="@color/ForumCommentButton"/>-->
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Comment"
-                        android:layout_marginLeft="5dp"
-                        android:background="@color/ForumCommentButton"/>
+                    <!--<Button-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:text="Comment"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:background="@color/ForumCommentButton"/>-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+            <!--</RelativeLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
 
 
 

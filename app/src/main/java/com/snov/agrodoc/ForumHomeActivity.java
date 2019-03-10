@@ -34,6 +34,8 @@ public class ForumHomeActivity extends AppCompatActivity {
     private static final String TAG = "FireLog";
     private ListView mMainList;
     List<String> NamesList = new ArrayList<String>();
+    List<String> TypeList = new ArrayList<String>();
+    List<String> BodyList = new ArrayList<String>();
     String NameString = "";
     //private FirebaseFirestore mFireStore;
 
@@ -57,15 +59,20 @@ public class ForumHomeActivity extends AppCompatActivity {
                 for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
                     if(doc.getType() == DocumentChange.Type.ADDED){
                         String name = doc.getDocument().getString("user_name");
+                        String type = doc.getDocument().getString("type");
+                        String body = doc.getDocument().getString("body");
+
                         Log.d(TAG, "Name: " + name);
                         //Toast.makeText(getApplicationContext(), "Name: " + name , Toast.LENGTH_LONG).show();
                         NameString = NameString + "," + name;
                         //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
                         NamesList.add(name);
+                        TypeList.add(type);
+                        BodyList.add(body);
                     }
                 }
 
-                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, NamesList);
+                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, NamesList, TypeList, BodyList);
                 mMainList.setAdapter(discussionAdapter);
                 Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
             }
@@ -80,14 +87,18 @@ public class ForumHomeActivity extends AppCompatActivity {
     private class DiscussionAdapter extends ArrayAdapter<String> {
 
         private List<String> UserName;
+        private List<String> DiscussionType;
+        private List<String> DiscussionBody;
 
         private Activity context;
 
         //adapter constructor
-        private DiscussionAdapter(Activity context, List<String> UserName) {
+        private DiscussionAdapter(Activity context, List<String> UserName, List<String> DiscussionType, List<String> DiscussionBody) {
             super(context, R.layout.activity_forum_home, UserName);
             this.context = context;
             this.UserName = UserName;
+            this.DiscussionType = DiscussionType;
+            this.DiscussionBody = DiscussionBody;
         }
 
 
@@ -114,6 +125,8 @@ public class ForumHomeActivity extends AppCompatActivity {
 
             //bind data to UI components
             viewHolder.user_name.setText(UserName.get(position));
+            viewHolder.discussion_type.setText(DiscussionType.get(position));
+            viewHolder.discussion_body.setText(DiscussionBody.get(position));
             viewHolder.Card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -128,11 +141,15 @@ public class ForumHomeActivity extends AppCompatActivity {
         //Defining UI components
         class ViewHolder{
             TextView user_name;
+            TextView discussion_type;
+            TextView discussion_body;
             CardView Card;
 
 
             ViewHolder(View v){
                 user_name = (TextView)v.findViewById(R.id.username);
+                discussion_type = (TextView)v.findViewById(R.id.discussion_type);
+                discussion_body = (TextView)v.findViewById(R.id.discussion_body);
                 Card = (CardView)v.findViewById(R.id.discussion_item_card);
 
             }

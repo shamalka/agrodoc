@@ -1,8 +1,11 @@
 package com.snov.agrodoc;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +41,8 @@ public class ForumHomeActivity extends AppCompatActivity {
     List<String> TypeList = new ArrayList<String>();
     List<String> BodyList = new ArrayList<String>();
     String NameString = "";
+
+    Button AddNewButton;
     //private FirebaseFirestore mFireStore;
 
     @Override
@@ -45,6 +51,23 @@ public class ForumHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forum_home);
 
         mMainList = (ListView)findViewById(R.id.discussion_list);
+
+        AddNewButton = (Button)findViewById(R.id.add_new_button);
+        AddNewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                final Dialog fbDialogue = new Dialog(ForumHomeActivity.this, android.R.style.Theme_Black_NoTitleBar);
+//                fbDialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
+//                fbDialogue.setContentView(R.layout.dialogue);
+//                fbDialogue.setCancelable(true);
+//                fbDialogue.show();
+                PopUpDialog popUpDialog = new PopUpDialog();
+                popUpDialog.show(getSupportFragmentManager(), "PopUpDialog");
+            }
+        });
+
+
+
         //Toast.makeText(getApplicationContext(), "Name: " , Toast.LENGTH_LONG).show();
 
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();

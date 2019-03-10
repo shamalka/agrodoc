@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLyt"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF"
+        android:paddingTop="10dp"
+
+        >
+
+        <TextView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Add New Discussion"
+            android:textSize="10dp" />
+
+
+        <RadioButton
+            android:layout_marginLeft="10dp"
+            android:id="@+id/r1"
+            android:layout_below="@id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Problem"/>
+        <RadioButton
+            android:id="@+id/r2"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/r1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Solution"/>
+        <RadioButton
+            android:id="@+id/r3"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/r2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Treatment"/>
+
+        <EditText
+            android:id="@+id/body_txt"
+            android:layout_below="@id/r3"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/body_txt"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Submit"/>
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

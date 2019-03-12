@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -41,6 +43,8 @@ public class ForumHomeActivity extends AppCompatActivity {
     List<String> TypeList = new ArrayList<String>();
     List<String> BodyList = new ArrayList<String>();
     String NameString = "";
+
+    FirebaseAuth mAuth;
 
     Button AddNewButton;
     //private FirebaseFirestore mFireStore;
@@ -66,7 +70,10 @@ public class ForumHomeActivity extends AppCompatActivity {
             }
         });
 
+        mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        Toast.makeText(getApplicationContext(),"User: "+user.getDisplayName(), Toast.LENGTH_LONG).show();
 
         //Toast.makeText(getApplicationContext(), "Name: " , Toast.LENGTH_LONG).show();
 
@@ -97,7 +104,7 @@ public class ForumHomeActivity extends AppCompatActivity {
 
                 DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, NamesList, TypeList, BodyList);
                 mMainList.setAdapter(discussionAdapter);
-                Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
             }
         });
 

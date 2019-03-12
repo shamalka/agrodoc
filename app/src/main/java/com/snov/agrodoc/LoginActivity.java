@@ -62,7 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null){
             FirebaseUser user = mAuth.getCurrentUser();
             UpdateUI(user);
+            Intent intent = new Intent(LoginActivity.this, ForumHomeActivity.class);
+            startActivity(intent);
         }
+
+
     }
 
     void SignInGoogle(){
@@ -98,6 +102,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("TAG", "Sign In Success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         UpdateUI(user);
+                        Intent intent = new Intent(LoginActivity.this, ForumHomeActivity.class);
+                        startActivity(intent);
                     }else{
                         progressBar.setVisibility(View.GONE);
                         Log.w("TAG", "Sign in Failed", task.getException());

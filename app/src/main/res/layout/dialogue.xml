@@ -13,6 +13,15 @@
 
         >
 
+        <ProgressBar
+            android:id="@+id/progress_bar_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="77dp" />
+
         <TextView
             android:id="@+id/close"
             android:layout_width="wrap_content"
@@ -22,31 +31,42 @@
             android:textSize="10dp" />
 
 
-        <RadioButton
-            android:layout_marginLeft="10dp"
-            android:id="@+id/r1"
-            android:layout_below="@id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Problem"/>
-        <RadioButton
-            android:id="@+id/r2"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/r1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Solution"/>
-        <RadioButton
-            android:id="@+id/r3"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/r2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Treatment"/>
+
+
+        <RadioGroup
+            android:layout_below="@+id/close"
+            android:layout_width="fill_parent"
+            android:layout_height="90dp"
+            android:id="@+id/radio_group">
+
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Problem"
+                android:id="@+id/radioButton"
+
+                android:checked="false"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solution"
+                android:id="@+id/radioButton2"
+                 />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Treatment"
+                android:id="@+id/radioButton3"
+                />
+        </RadioGroup>
 
         <EditText
             android:id="@+id/body_txt"
-            android:layout_below="@id/r3"
+            android:layout_below="@id/radio_group"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,8 +79,9 @@
             android:layout_below="@+id/body_txt"
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="Submit"/>
+
 
 
 

@@ -5,6 +5,7 @@ import android.support.annotation.BinderThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,6 +65,11 @@ public class PopUpDialog extends DialogFragment {
 
         });
 
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
+        String format = simpleDateFormat.format(new Date());
+        Toast.makeText(getContext(),"Time " + format,Toast.LENGTH_SHORT).show();
+
         ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progress_bar_pop);
         progressBar.setVisibility(View.GONE);
         EditText BodyText = (EditText)view.findViewById(R.id.body_txt);
@@ -76,8 +86,10 @@ public class PopUpDialog extends DialogFragment {
 
                 Map<String, String> DiscussionMap = new HashMap<>();
                 DiscussionMap.put("user_name", user.getDisplayName());
+                DiscussionMap.put("user_id", user.getUid());
                 DiscussionMap.put("type", DiscussionType);
                 DiscussionMap.put("body", body);
+                DiscussionMap.put("timestamp", format);
 
                 mFirestore.collection("discussion").add(DiscussionMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

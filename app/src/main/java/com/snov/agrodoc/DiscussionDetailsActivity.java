@@ -1,13 +1,19 @@
 package com.snov.agrodoc;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,11 +33,19 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.snov.agrodoc.Utilities.Config;
 
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DiscussionDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "FireLog";
     FirebaseAuth mAuth;
     Button AddCommentButton;
+    List<String> CommentUserList = new ArrayList<String>();
+    List<String> CommentBodyList = new ArrayList<String>();
+    int Count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +55,14 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ListView listView = findViewById(R.id.listView);
-        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                new String[] {"Copy", "Paste", "Cut", "Delete", "Convert", "Open"}));
-
+//        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+//                new String[] {"Copy", "Paste", "Cut", "Delete", "Convert", "Open"}));
 
         TextView DisBody = (TextView)findViewById(R.id.discussion_body_item);
         ProgressBar progressBar = (ProgressBar)findViewById(R.id.details_progress);
         progressBar.setVisibility(View.VISIBLE);
+
+        TextView CommentCount = (TextView)findViewById(R.id.comment_count);
 
         AddCommentButton = (Button)findViewById(R.id.add_comment_btn);
         AddCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +85,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
 
+        //Discussion body
         DocumentReference docRef = mFireStore.collection("discussion").document(Config.DOC_ID.toString());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -88,5 +104,115 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Comment lsit
+        mFireStore.collection("discussion").document(Config.DOC_ID).collection("comments").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                if(e != null){
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+
+                for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
+                    if(doc.getType() == DocumentChange.Type.ADDED){
+                        String UserName = doc.getDocument().getString("user_name");
+                        String CommentBody  = doc.getDocument().getString("comment_body");
+                        String DocID = doc.getDocument().getId();
+
+
+                        Toast.makeText(getApplicationContext(), "Comment" + CommentBody , Toast.LENGTH_LONG).show();
+                        CommentUserList.add(UserName);
+                        CommentBodyList.add(CommentBody);
+
+                        //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+                CommentAdapter commentAdapter = new CommentAdapter(DiscussionDetailsActivity.this, CommentUserList, CommentBodyList);
+                listView.setAdapter(commentAdapter);
+
+            }
+
+        });
+        //Toast.makeText(getApplicationContext(), Count, Toast.LENGTH_LONG).show();
+
+    }
+
+
+    //adapter is used to bind the data from above arrays to respective UI components
+    private class CommentAdapter extends ArrayAdapter<String> {
+
+        private List<String> UserName;
+        private List<String> CommentBody;
+
+
+        private Activity context;
+
+        //adapter constructor
+        private CommentAdapter(Activity context, List<String> UserName, List<String> CommentBody) {
+            super(context, R.layout.activity_discussion_details, UserName);
+            this.context = context;
+            this.UserName = UserName;
+            this.CommentBody = CommentBody;
+        }
+
+
+
+        @NonNull
+        @Override
+
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent){
+            View r = convertView;
+            CommentAdapter.ViewHolder viewHolder = null;
+
+            //things to do onclick of an item
+            if(r==null){
+                LayoutInflater layoutInflater = context.getLayoutInflater();
+                r = layoutInflater.inflate(R.layout.comment_list_item,null,true);
+
+                viewHolder = new CommentAdapter.ViewHolder(r);
+                r.setTag(viewHolder);
+            }else{
+                viewHolder = (CommentAdapter.ViewHolder)r.getTag();
+            }
+
+
+
+            //bind data to UI components
+            viewHolder.user_name.setText(UserName.get(position));
+            viewHolder.comment_body.setText(CommentBody.get(position));
+//            viewHolder.discussion_body.setText(DiscussionBody.get(position));
+//            viewHolder.Card.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(getContext(), "Go to  " + UserName.get(position), Toast.LENGTH_SHORT).show();
+//                    Config.USER_ID=UserName.get(position);
+//                    Config.DOC_ID=DocumentID.get(position);
+//                    Intent intent = new Intent(ForumHomeActivity.this, DiscussionDetailsActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
+
+            return r;
+
+        }
+
+        //Defining UI components
+        class ViewHolder{
+            TextView user_name;
+            TextView comment_body;
+            CardView Card;
+
+
+            ViewHolder(View v){
+                user_name = (TextView)v.findViewById(R.id.comment_user_name);
+                comment_body = (TextView)v.findViewById(R.id.comment_body);
+                Card = (CardView)v.findViewById(R.id.comment_card);
+
+            }
+
+
+        }
     }
 }

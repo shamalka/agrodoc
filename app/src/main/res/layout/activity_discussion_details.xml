@@ -45,7 +45,23 @@ app:umanoShadowHeight="4dp">
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_discussion_details" />
+    <ScrollView
+        android:layout_below="@id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+
+            android:id="@+id/discussion_body_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15dp"/>
+
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/details_progress"
@@ -93,11 +109,22 @@ app:umanoShadowHeight="4dp">
         android:layout_height="40dp">
 
         <TextView
+            android:id="@+id/comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:textSize="16sp"
-            android:text="Comments"
+            android:text="0"
+            android:paddingStart="15dp"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:textSize="16sp"
+            android:text=" Comments"
             android:paddingStart="15dp"
             android:layout_centerVertical="true"/>
 

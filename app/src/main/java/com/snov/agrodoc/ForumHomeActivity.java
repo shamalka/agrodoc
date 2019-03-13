@@ -30,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.snov.agrodoc.Models.Discussion;
 import com.snov.agrodoc.Utilities.Config;
@@ -84,7 +85,7 @@ public class ForumHomeActivity extends AppCompatActivity {
 
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
 
-        mFireStore.collection("discussion").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFireStore.collection("discussion").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if(e != null){

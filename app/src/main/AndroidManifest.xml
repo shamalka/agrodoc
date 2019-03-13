@@ -20,7 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".ForumHomeActivity"></activity>
+        <activity android:name=".ForumHomeActivity" />
+        <activity
+            android:name=".DiscussionDetailsActivity"
+            android:label="@string/title_activity_discussion_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

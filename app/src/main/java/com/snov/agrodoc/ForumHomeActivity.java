@@ -31,6 +31,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.snov.agrodoc.Models.Discussion;
+import com.snov.agrodoc.Utilities.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,10 @@ public class ForumHomeActivity extends AppCompatActivity {
     List<String> NamesList = new ArrayList<String>();
     List<String> TypeList = new ArrayList<String>();
     List<String> BodyList = new ArrayList<String>();
+    List<String> DocIDList = new ArrayList<String>();
     String NameString = "";
+
+
 
     FirebaseAuth mAuth;
 
@@ -91,6 +96,7 @@ public class ForumHomeActivity extends AppCompatActivity {
                         String name = doc.getDocument().getString("user_name");
                         String type = doc.getDocument().getString("type");
                         String body = doc.getDocument().getString("body");
+                        String DocID = doc.getDocument().getId();
 
                         Log.d(TAG, "Name: " + name);
                         //Toast.makeText(getApplicationContext(), "Name: " + name , Toast.LENGTH_LONG).show();
@@ -99,10 +105,11 @@ public class ForumHomeActivity extends AppCompatActivity {
                         NamesList.add(name);
                         TypeList.add(type);
                         BodyList.add(body);
+                        DocIDList.add(DocID);
                     }
                 }
 
-                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, NamesList, TypeList, BodyList);
+                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, NamesList, TypeList, BodyList,DocIDList);
                 mMainList.setAdapter(discussionAdapter);
                 //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
             }
@@ -119,16 +126,19 @@ public class ForumHomeActivity extends AppCompatActivity {
         private List<String> UserName;
         private List<String> DiscussionType;
         private List<String> DiscussionBody;
+        private List<String> DocumentID;
+
 
         private Activity context;
 
         //adapter constructor
-        private DiscussionAdapter(Activity context, List<String> UserName, List<String> DiscussionType, List<String> DiscussionBody) {
+        private DiscussionAdapter(Activity context, List<String> UserName, List<String> DiscussionType, List<String> DiscussionBody, List<String> DocumentID) {
             super(context, R.layout.activity_forum_home, UserName);
             this.context = context;
             this.UserName = UserName;
             this.DiscussionType = DiscussionType;
             this.DiscussionBody = DiscussionBody;
+            this.DocumentID = DocumentID;
         }
 
 
@@ -161,6 +171,10 @@ public class ForumHomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getContext(), "Go to  " + UserName.get(position), Toast.LENGTH_SHORT).show();
+                    Config.USER_ID=UserName.get(position);
+                    Config.DOC_ID=DocumentID.get(position);
+                    Intent intent = new Intent(ForumHomeActivity.this, DiscussionDetailsActivity.class);
+                    startActivity(intent);
                 }
             });
 

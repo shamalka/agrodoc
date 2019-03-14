@@ -115,10 +115,6 @@ public class ForumHomeActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
     }
 
     //adapter is used to bind the data from above arrays to respective UI components

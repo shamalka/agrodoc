@@ -45,7 +45,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     Button AddCommentButton;
     List<String> CommentUserList = new ArrayList<String>();
     List<String> CommentBodyList = new ArrayList<String>();
-    int Count;
+    Integer Count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,22 +120,25 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
                         String DocID = doc.getDocument().getId();
 
 
-                        Toast.makeText(getApplicationContext(), "Comment" + CommentBody , Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Comment" + CommentBody , Toast.LENGTH_LONG).show();
                         CommentUserList.add(UserName);
                         CommentBodyList.add(CommentBody);
+                        Count=Count+1;
 
-                        //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
 
                     }
                 }
 
+                Toast.makeText(getApplicationContext(), "Count: " + Count, Toast.LENGTH_LONG).show();
+                CommentCount.setText(Count.toString());
                 CommentAdapter commentAdapter = new CommentAdapter(DiscussionDetailsActivity.this, CommentUserList, CommentBodyList);
                 listView.setAdapter(commentAdapter);
 
             }
 
+
         });
-        //Toast.makeText(getApplicationContext(), Count, Toast.LENGTH_LONG).show();
+
 
     }
 

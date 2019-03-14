@@ -122,10 +122,8 @@ app:umanoShadowHeight="4dp">
             android:layout_toRightOf="@+id/comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
             android:textSize="16sp"
             android:text=" Comments"
-            android:paddingStart="15dp"
             android:layout_centerVertical="true"/>
 
     </RelativeLayout>

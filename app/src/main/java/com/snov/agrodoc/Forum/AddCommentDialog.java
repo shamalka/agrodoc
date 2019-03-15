@@ -1,4 +1,4 @@
-package com.snov.agrodoc;
+package com.snov.agrodoc.Forum;
 
 import android.os.Bundle;
 import android.support.annotation.BinderThread;
@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
 
 import java.util.HashMap;
@@ -30,8 +31,6 @@ public class AddCommentDialog extends DialogFragment {
 
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
-
-
 
     String DiscussionType;
 
@@ -85,11 +84,6 @@ public class AddCommentDialog extends DialogFragment {
 
             }
         });
-
-
         return view;
-
-
-
     }
 }

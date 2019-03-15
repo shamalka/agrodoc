@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground">
 
     <android.support.v7.widget.CardView
         android:id="@+id/discussion_item_card"
         android:layout_below="@+id/recent_txt"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_margin="10dp">
+        android:layout_height="130dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -92,18 +96,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Like"
-                    android:background="@color/ForumCommentButton"/>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Comment"
-                    android:layout_marginLeft="5dp"
-                    android:background="@color/ForumCommentButton"/>
 
             </LinearLayout>
 

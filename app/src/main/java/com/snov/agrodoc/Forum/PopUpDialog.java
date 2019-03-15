@@ -1,4 +1,4 @@
-package com.snov.agrodoc;
+package com.snov.agrodoc.Forum;
 
 import android.os.Bundle;
 import android.support.annotation.BinderThread;
@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.snov.agrodoc.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

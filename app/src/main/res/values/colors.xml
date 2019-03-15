@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="ForumNewThreadButton">#00E676</color>
     <color name="ForumCommentButton">#E0F2F1</color>
+    <color name="colorBackground">#ABEBC6</color>
 </resources>

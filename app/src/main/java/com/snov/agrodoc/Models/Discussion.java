@@ -7,6 +7,7 @@ public class Discussion {
     String Body;
     String Date;
     String Time;
+    String DocID;
 
     public String getUserName(){
         return UserName;
@@ -54,5 +55,13 @@ public class Discussion {
 
     public void setTime(String time) {
         Time = time;
+    }
+
+    public void setDocID(String docID) {
+        DocID = docID;
+    }
+
+    public String getDocID() {
+        return DocID;
     }
 }

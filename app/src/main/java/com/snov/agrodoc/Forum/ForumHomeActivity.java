@@ -25,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.snov.agrodoc.Models.Discussion;
+import com.snov.agrodoc.Models.Product;
 import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
 
@@ -39,6 +41,8 @@ public class ForumHomeActivity extends AppCompatActivity {
     List<String> TypeList = new ArrayList<String>();
     List<String> BodyList = new ArrayList<String>();
     List<String> DocIDList = new ArrayList<String>();
+
+    ArrayList<Discussion> DiscussionArray = new ArrayList<Discussion>();
     String NameString = "";
 
 
@@ -92,18 +96,26 @@ public class ForumHomeActivity extends AppCompatActivity {
                         String body = doc.getDocument().getString("body");
                         String DocID = doc.getDocument().getId();
 
-                        Log.d(TAG, "Name: " + name);
-                        //Toast.makeText(getApplicationContext(), "Name: " + name , Toast.LENGTH_LONG).show();
-                        NameString = NameString + "," + name;
-                        //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
-                        NamesList.add(name);
-                        TypeList.add(type);
-                        BodyList.add(body);
-                        DocIDList.add(DocID);
+                        Discussion discussion = new Discussion();
+                        discussion.setUserName(name);
+                        discussion.setType(type);
+                        discussion.setBody(body);
+                        discussion.setDocID(DocID);
+
+//                        Log.d(TAG, "Name: " + name);
+//                        //Toast.makeText(getApplicationContext(), "Name: " + name , Toast.LENGTH_LONG).show();
+//                        NameString = NameString + "," + name;
+//                        //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
+//                        NamesList.add(name);
+//                        TypeList.add(type);
+//                        BodyList.add(body);
+//                        DocIDList.add(DocID);
+
+                        DiscussionArray.add(discussion);
                     }
                 }
 
-                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, NamesList, TypeList, BodyList,DocIDList);
+                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, DiscussionArray);
                 mMainList.setAdapter(discussionAdapter);
                 //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
             }
@@ -111,24 +123,23 @@ public class ForumHomeActivity extends AppCompatActivity {
     }
 
     //adapter is used to bind the data from above arrays to respective UI components
-    private class DiscussionAdapter extends ArrayAdapter<String> {
+    private class DiscussionAdapter extends ArrayAdapter<Discussion> {
 
-        private List<String> UserName;
-        private List<String> DiscussionType;
-        private List<String> DiscussionBody;
-        private List<String> DocumentID;
+//        private List<String> UserName;
+//        private List<String> DiscussionType;
+//        private List<String> DiscussionBody;
+//        private List<String> DocumentID;
+
+        ArrayList<Discussion> DiscussionArrayList = new ArrayList<Discussion>();
 
 
         private Activity context;
 
         //adapter constructor
-        private DiscussionAdapter(Activity context, List<String> UserName, List<String> DiscussionType, List<String> DiscussionBody, List<String> DocumentID) {
-            super(context, R.layout.activity_forum_home, UserName);
+        private DiscussionAdapter(Activity context, ArrayList<Discussion> DiscussionArrayList) {
+            super(context, R.layout.activity_forum_home, DiscussionArrayList);
             this.context = context;
-            this.UserName = UserName;
-            this.DiscussionType = DiscussionType;
-            this.DiscussionBody = DiscussionBody;
-            this.DocumentID = DocumentID;
+            this.DiscussionArrayList = DiscussionArrayList;
         }
 
 
@@ -152,21 +163,36 @@ public class ForumHomeActivity extends AppCompatActivity {
             }
 
 
+            viewHolder.user_name.setText(DiscussionArrayList.get(position).getUserName());
+            viewHolder.discussion_type.setText(DiscussionArrayList.get(position).getType());
+            viewHolder.discussion_body.setText(DiscussionArrayList.get(position).getBody());
 
-            //bind data to UI components
-            viewHolder.user_name.setText(UserName.get(position));
-            viewHolder.discussion_type.setText(DiscussionType.get(position));
-            viewHolder.discussion_body.setText(DiscussionBody.get(position));
             viewHolder.Card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Go to  " + UserName.get(position), Toast.LENGTH_SHORT).show();
-                    Config.USER_ID=UserName.get(position);
-                    Config.DOC_ID=DocumentID.get(position);
+                    Toast.makeText(getContext(), "Go to  " + DiscussionArrayList.get(position).getUserName(), Toast.LENGTH_SHORT).show();
+                    Config.USER_ID= DiscussionArrayList.get(position).getUserName();
+                    Config.DOC_ID= DiscussionArrayList.get(position).getDocID();
                     Intent intent = new Intent(ForumHomeActivity.this, DiscussionDetailsActivity.class);
                     startActivity(intent);
                 }
             });
+
+
+//            //bind data to UI components
+//            viewHolder.user_name.setText(UserName.get(position));
+//            viewHolder.discussion_type.setText(DiscussionType.get(position));
+//            viewHolder.discussion_body.setText(DiscussionBody.get(position));
+//            viewHolder.Card.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(getContext(), "Go to  " + UserName.get(position), Toast.LENGTH_SHORT).show();
+//                    Config.USER_ID=UserName.get(position);
+//                    Config.DOC_ID=DocumentID.get(position);
+//                    Intent intent = new Intent(ForumHomeActivity.this, DiscussionDetailsActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
 
             return r;
 

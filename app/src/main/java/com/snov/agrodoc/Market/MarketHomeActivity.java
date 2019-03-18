@@ -2,6 +2,7 @@ package com.snov.agrodoc.Market;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -164,6 +165,24 @@ public class MarketHomeActivity extends AppCompatActivity {
             viewHolder.rating.setText(Products.get(position).getRating());
             viewHolder.price.setText(Products.get(position).getPrice());
             viewHolder.type.setText(Products.get(position).getType());
+            viewHolder.product_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Product productItem = new Product();
+//                    productItem.setProductName(Products.get(position).getProductName());
+//                    productItem.setPrice(Products.get(position).getPrice());
+//                    productItem.setPrice(Products.get(position).getRating());
+
+
+                    ProductItemPopUp productItemPopUp = new ProductItemPopUp();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("item_name", Products.get(position).getProductName());
+                    bundle.putString("item_price", Products.get(position).getPrice());
+                    bundle.putString("item_rating", Products.get(position).getRating());
+                    productItemPopUp.setArguments(bundle);
+                    productItemPopUp.show(getSupportFragmentManager(), "PopUpItem");
+                }
+            });
 //            viewHolder.Card.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -194,6 +213,7 @@ public class MarketHomeActivity extends AppCompatActivity {
                 rating = (TextView)v.findViewById(R.id.product_rating);
                 price = (TextView)v.findViewById(R.id.product_price);
                 type = (TextView)v.findViewById(R.id.product_type);
+                product_item = (CardView)v.findViewById(R.id.product_item_card);
 
             }
 

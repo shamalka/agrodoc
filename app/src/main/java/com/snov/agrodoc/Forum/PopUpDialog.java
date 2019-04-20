@@ -1,14 +1,17 @@
 package com.snov.agrodoc.Forum;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.BinderThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -40,6 +43,7 @@ public class PopUpDialog extends DialogFragment {
     RadioButton radioButton;
 
     String DiscussionType;
+    Button AddDiscussionButton;
 
     @Nullable
     @Override
@@ -92,11 +96,16 @@ public class PopUpDialog extends DialogFragment {
                 DiscussionMap.put("body", body);
                 DiscussionMap.put("timestamp", format);
 
+
+
                 mFirestore.collection("discussion").add(DiscussionMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getContext(), "Discussion Added", Toast.LENGTH_LONG).show();
                         getDialog().dismiss();
+                       // getActivity().getSupportFragmentManager().beginTransaction().remove(PopUpDialog.this).commit();
+
+
                     }
 
 
@@ -116,5 +125,17 @@ public class PopUpDialog extends DialogFragment {
 
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 }

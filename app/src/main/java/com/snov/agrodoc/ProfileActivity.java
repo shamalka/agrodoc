@@ -1,12 +1,9 @@
-package com.snov.agrodoc.Forum;
+package com.snov.agrodoc;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -15,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,75 +24,53 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.snov.agrodoc.Forum.DiscussionDetailsActivity;
+import com.snov.agrodoc.Forum.ForumHomeActivity;
 import com.snov.agrodoc.Models.Discussion;
-import com.snov.agrodoc.Models.Product;
-import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ForumHomeActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
+
+    TextView UserName, UserEmail;
+    private ListView ProfileDiscussionList;
+    ArrayList<Discussion> ProfileDiscussionArray = new ArrayList<Discussion>();
 
     private static final String TAG = "FireLog";
-    private ListView mMainList;
-    List<String> NamesList = new ArrayList<String>();
-    List<String> TypeList = new ArrayList<String>();
-    List<String> BodyList = new ArrayList<String>();
-    List<String> DocIDList = new ArrayList<String>();
 
-    ArrayList<Discussion> DiscussionArray = new ArrayList<Discussion>();
-    String NameString = "";
-
-
-
-    FirebaseAuth mAuth;
-
-    Button AddNewButton;
-    //private FirebaseFirestore mFireStore;
+    public String LoggedUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forum_home);
+        setContentView(R.layout.activity_profile);
 
-        mMainList = (ListView)findViewById(R.id.discussion_list);
-
-        AddNewButton = (Button)findViewById(R.id.add_new_button);
-        AddNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                final Dialog fbDialogue = new Dialog(ForumHomeActivity.this, android.R.style.Theme_Black_NoTitleBar);
-//                fbDialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
-//                fbDialogue.setContentView(R.layout.dialogue);
-//                fbDialogue.setCancelable(true);
-//                fbDialogue.show();
-                PopUpDialog popUpDialog = new PopUpDialog();
-                popUpDialog.show(getSupportFragmentManager(), "PopUpDialog");
-                // Create new fragment and transaction
-//                Fragment newFragment = new PopUpDialog();
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.Co , newFragment);
-//                transaction.addToBackStack(null);
-//
-//                transaction.commit();
-
-//                PopUpDialog popUpDialog = new PopUpDialog();
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.Container , popUpDialog).commit();
-
-            }
-        });
-
-        mAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        Toast.makeText(getApplicationContext(),"User: "+user.getDisplayName(), Toast.LENGTH_LONG).show();
-
-        //Toast.makeText(getApplicationContext(), "Name: " , Toast.LENGTH_LONG).show();
+        ProfileDiscussionList = (ListView)findViewById(R.id.post_list);
 
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
 
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentFirebaseUser !=null) {
+            //Toast.makeText(this, currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, currentFirebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, currentFirebaseUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+            UserName = (TextView)findViewById(R.id.profile_username);
+            UserEmail = (TextView)findViewById(R.id.profile_email);
+
+            UserName.setText(currentFirebaseUser.getDisplayName());
+            UserEmail.setText(currentFirebaseUser.getEmail());
+        } else {
+            Toast.makeText(this, "No User", Toast.LENGTH_SHORT).show();
+        }
+
+        LoggedUserID = currentFirebaseUser.getUid();
+
+        ShowDiscussionList();
+    }
+
+    private void ShowDiscussionList() {
+        FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
         mFireStore.collection("discussion").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -105,7 +79,7 @@ public class ForumHomeActivity extends AppCompatActivity {
                 }
 
                 for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-                    if(doc.getType() == DocumentChange.Type.ADDED){
+                    if(doc.getType() == DocumentChange.Type.ADDED && LoggedUserID.equals(doc.getDocument().getString("user_id"))){
                         String name = doc.getDocument().getString("user_name");
                         String type = doc.getDocument().getString("type");
                         String body = doc.getDocument().getString("body");
@@ -126,12 +100,12 @@ public class ForumHomeActivity extends AppCompatActivity {
 //                        BodyList.add(body);
 //                        DocIDList.add(DocID);
 
-                        DiscussionArray.add(discussion);
+                        ProfileDiscussionArray.add(discussion);
                     }
                 }
 
-                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ForumHomeActivity.this, DiscussionArray);
-                mMainList.setAdapter(discussionAdapter);
+                DiscussionAdapter discussionAdapter = new DiscussionAdapter(ProfileActivity.this, ProfileDiscussionArray);
+                ProfileDiscussionList.setAdapter(discussionAdapter);
                 //Toast.makeText(getApplicationContext(), NameString, Toast.LENGTH_LONG).show();
             }
         });
@@ -152,7 +126,7 @@ public class ForumHomeActivity extends AppCompatActivity {
 
         //adapter constructor
         private DiscussionAdapter(Activity context, ArrayList<Discussion> DiscussionArrayList) {
-            super(context, R.layout.activity_forum_home, DiscussionArrayList);
+            super(context, R.layout.activity_profile, DiscussionArrayList);
             this.context = context;
             this.DiscussionArrayList = DiscussionArrayList;
         }
@@ -164,17 +138,17 @@ public class ForumHomeActivity extends AppCompatActivity {
 
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent){
             View r = convertView;
-            ViewHolder viewHolder = null;
+            DiscussionAdapter.ViewHolder viewHolder = null;
 
             //things to do onclick of an item
             if(r==null){
                 LayoutInflater layoutInflater = context.getLayoutInflater();
                 r = layoutInflater.inflate(R.layout.discussion_item,null,true);
 
-                viewHolder = new ViewHolder(r);
+                viewHolder = new DiscussionAdapter.ViewHolder(r);
                 r.setTag(viewHolder);
             }else{
-                viewHolder = (ViewHolder)r.getTag();
+                viewHolder = (DiscussionAdapter.ViewHolder)r.getTag();
             }
 
 
@@ -188,7 +162,7 @@ public class ForumHomeActivity extends AppCompatActivity {
                     Toast.makeText(getContext(), "Go to  " + DiscussionArrayList.get(position).getUserName(), Toast.LENGTH_SHORT).show();
                     Config.USER_ID= DiscussionArrayList.get(position).getUserName();
                     Config.DOC_ID= DiscussionArrayList.get(position).getDocID();
-                    Intent intent = new Intent(ForumHomeActivity.this, DiscussionDetailsActivity.class);
+                    Intent intent = new Intent(ProfileActivity.this, DiscussionDetailsActivity.class);
                     startActivity(intent);
                 }
             });
@@ -231,11 +205,5 @@ public class ForumHomeActivity extends AppCompatActivity {
 
 
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 }

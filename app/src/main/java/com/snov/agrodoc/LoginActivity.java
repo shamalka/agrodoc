@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null){
             FirebaseUser user = mAuth.getCurrentUser();
             UpdateUI(user);
-            Intent intent = new Intent(LoginActivity.this, ForumHomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
         }
 
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("TAG", "Sign In Success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         UpdateUI(user);
-                        Intent intent = new Intent(LoginActivity.this, ForumHomeActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     }else{
                         progressBar.setVisibility(View.GONE);

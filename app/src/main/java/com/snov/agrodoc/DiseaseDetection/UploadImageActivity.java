@@ -147,6 +147,8 @@ public class UploadImageActivity extends AppCompatActivity implements View.OnCli
         return path;
     }
 
+
+
     private void requestStoragePermission() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
             return;

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".DiseaseDetection.DetectorHomeActivity"></activity>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".DiseaseDetection.UploadImageActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -31,6 +32,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".Market.MarketHomeActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

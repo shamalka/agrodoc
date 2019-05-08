@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.snov.agrodoc.DiseaseDetection.DetectorHomeActivity;
 import com.snov.agrodoc.DiseaseDetection.UploadImageActivity;
 import com.snov.agrodoc.Forum.ForumHomeActivity;
 import com.snov.agrodoc.Market.MarketHomeActivity;
@@ -37,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         ImageUpload.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(HomeActivity.this, DetectorHomeActivity.class);
             startActivity(intent);
         });
 

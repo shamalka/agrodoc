@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    app:title="AgroDoc"
+    app:titleTextColor="#fff"
+    >
+
+
+        <Button
+            android:id="@+id/profile_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="230dp"
+            android:background="@drawable/ic_account_circle_white_24dp" />
+
+
+
+
+
+</android.support.v7.widget.Toolbar>

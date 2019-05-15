@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -28,18 +31,23 @@ import com.snov.agrodoc.Forum.DiscussionDetailsActivity;
 import com.snov.agrodoc.Forum.ForumHomeActivity;
 import com.snov.agrodoc.Models.Discussion;
 import com.snov.agrodoc.Utilities.Config;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
     TextView UserName, UserEmail;
+    ImageView ProfileImage;
+    Button LogoutButton;
     private ListView ProfileDiscussionList;
     ArrayList<Discussion> ProfileDiscussionArray = new ArrayList<Discussion>();
 
     private static final String TAG = "FireLog";
 
     public String LoggedUserID;
+
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +65,20 @@ public class ProfileActivity extends AppCompatActivity {
             //Toast.makeText(this, currentFirebaseUser.getDisplayName(), Toast.LENGTH_SHORT).show();
             UserName = (TextView)findViewById(R.id.profile_username);
             UserEmail = (TextView)findViewById(R.id.profile_email);
+            ProfileImage = (ImageView) findViewById(R.id.profile_image);
+            LogoutButton = (Button)findViewById(R.id.profile_logout);
 
             UserName.setText(currentFirebaseUser.getDisplayName());
             UserEmail.setText(currentFirebaseUser.getEmail());
+            if(currentFirebaseUser.getPhotoUrl() != null){
+                Picasso.get().load(currentFirebaseUser.getPhotoUrl()).into(ProfileImage);
+            }
+            LogoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Logout();
+                }
+            });
         } else {
             Toast.makeText(this, "No User", Toast.LENGTH_SHORT).show();
         }
@@ -205,5 +224,15 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public void Logout(){
+//        FirebaseAuth.getInstance().signOut();
+//        mGoogleSignInClient.signOut();
+    }
+
+    public void GoBack(){
+        Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }

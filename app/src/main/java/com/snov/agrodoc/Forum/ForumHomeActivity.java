@@ -2,6 +2,7 @@ package com.snov.agrodoc.Forum;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ import com.snov.agrodoc.Models.Discussion;
 import com.snov.agrodoc.Models.Product;
 import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,9 @@ public class ForumHomeActivity extends AppCompatActivity {
     ArrayList<Discussion> DiscussionArray = new ArrayList<Discussion>();
     String NameString = "";
 
+    Uri photoUri;
 
+    ImageView UserImage;
 
     FirebaseAuth mAuth;
 
@@ -60,38 +65,32 @@ public class ForumHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum_home);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        Toast.makeText(getApplicationContext(),"User: "+user.getDisplayName(), Toast.LENGTH_LONG).show();
+        Log.d("user", user.getDisplayName() + " | " + user.getEmail());
+
+        photoUri = user.getPhotoUrl();
+
+//        UserImage = (ImageView)findViewById(R.id.user_image);
+//        Picasso.get().load(photoUri).into(UserImage);
+
         mMainList = (ListView)findViewById(R.id.discussion_list);
 
         AddNewButton = (Button)findViewById(R.id.add_new_button);
         AddNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                final Dialog fbDialogue = new Dialog(ForumHomeActivity.this, android.R.style.Theme_Black_NoTitleBar);
-//                fbDialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
-//                fbDialogue.setContentView(R.layout.dialogue);
-//                fbDialogue.setCancelable(true);
-//                fbDialogue.show();
                 PopUpDialog popUpDialog = new PopUpDialog();
                 popUpDialog.show(getSupportFragmentManager(), "PopUpDialog");
-                // Create new fragment and transaction
-//                Fragment newFragment = new PopUpDialog();
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.Co , newFragment);
-//                transaction.addToBackStack(null);
-//
-//                transaction.commit();
-
-//                PopUpDialog popUpDialog = new PopUpDialog();
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.Container , popUpDialog).commit();
-
+                //Toast.makeText(getApplicationContext(), (CharSequence) photoUri, Toast.LENGTH_LONG).show();
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser user = mAuth.getCurrentUser();
-        Toast.makeText(getApplicationContext(),"User: "+user.getDisplayName(), Toast.LENGTH_LONG).show();
+
+
 
         //Toast.makeText(getApplicationContext(), "Name: " , Toast.LENGTH_LONG).show();
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,8 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     List<String> CommentBodyList = new ArrayList<String>();
     Integer Count=0;
 
+    ImageView ColToolbarImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,9 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ListView listView = findViewById(R.id.listView);
+
+        ColToolbarImage = (ImageView)findViewById(R.id.header);
+        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/agrodocv2.appspot.com/o/images%2Fea229dc2-5b3a-4181-b6e2-bbbb0d70db0f?alt=media&token=e8021e18-6fc8-4034-9d29-43fb1482131e").into(ColToolbarImage);
 //        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
 //                new String[] {"Copy", "Paste", "Cut", "Delete", "Convert", "Open"}));
 

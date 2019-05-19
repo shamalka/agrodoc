@@ -90,10 +90,6 @@ public class ForumHomeActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
         //Toast.makeText(getApplicationContext(), "Name: " , Toast.LENGTH_LONG).show();
 
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();

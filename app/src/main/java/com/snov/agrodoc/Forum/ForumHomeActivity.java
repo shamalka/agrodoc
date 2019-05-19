@@ -82,9 +82,11 @@ public class ForumHomeActivity extends AppCompatActivity {
         AddNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopUpDialog popUpDialog = new PopUpDialog();
-                popUpDialog.show(getSupportFragmentManager(), "PopUpDialog");
+//                PopUpDialog popUpDialog = new PopUpDialog();
+//                popUpDialog.show(getSupportFragmentManager(), "PopUpDialog");
                 //Toast.makeText(getApplicationContext(), (CharSequence) photoUri, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ForumHomeActivity.this, AddDiscussionActivity.class);
+                startActivity(intent);
             }
         });
 

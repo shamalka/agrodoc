@@ -87,8 +87,6 @@ public class PopUpDialog extends DialogFragment {
                 progressBar.setVisibility(View.VISIBLE);
                 String body = BodyText.getText().toString();
 
-
-
                 Map<String, String> DiscussionMap = new HashMap<>();
                 DiscussionMap.put("user_name", user.getDisplayName());
                 DiscussionMap.put("user_id", user.getUid());

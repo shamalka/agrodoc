@@ -4,10 +4,28 @@ public class Discussion {
     String UserName;
     String UserID;
     String Type;
+    String Title;
     String Body;
+    String ImageUrl;
     String Date;
     String Time;
     String DocID;
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
+    }
 
     public String getUserName(){
         return UserName;

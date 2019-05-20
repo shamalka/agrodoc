@@ -66,7 +66,7 @@ public class AddCommentDialog extends DialogFragment {
                 CommentMap.put("comment_body", body);
 
 
-                mFirestore.collection("discussion").document(Config.DOC_ID).collection("comments").add(CommentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                mFirestore.collection("discussions").document(Config.DOC_ID).collection("comments").add(CommentMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getContext(), "Comment Added", Toast.LENGTH_LONG).show();

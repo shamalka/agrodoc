@@ -35,6 +35,8 @@ import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,11 +61,12 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.listView);
 
         ColToolbarImage = (ImageView)findViewById(R.id.header);
-        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/agrodocv2.appspot.com/o/images%2Fea229dc2-5b3a-4181-b6e2-bbbb0d70db0f?alt=media&token=e8021e18-6fc8-4034-9d29-43fb1482131e").into(ColToolbarImage);
+        //Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/agrodocv2.appspot.com/o/images%2Fea229dc2-5b3a-4181-b6e2-bbbb0d70db0f?alt=media&token=e8021e18-6fc8-4034-9d29-43fb1482131e").into(ColToolbarImage);
 //        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
 //                new String[] {"Copy", "Paste", "Cut", "Delete", "Convert", "Open"}));
 
         TextView DisBody = (TextView)findViewById(R.id.discussion_body_item);
+        TextView DisTitle = (TextView)findViewById(R.id.title_text);
         ProgressBar progressBar = (ProgressBar)findViewById(R.id.details_progress);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -91,7 +94,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
 
         //Discussion body
-        DocumentReference docRef = mFireStore.collection("discussion").document(Config.DOC_ID.toString());
+        DocumentReference docRef = mFireStore.collection("discussions").document(Config.DOC_ID.toString());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -99,7 +102,9 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        DisTitle.setText(document.getString("title"));
                         DisBody.setText(document.getString("body"));
+                        Picasso.get().load(document.getString("image_url")).into(ColToolbarImage);
                         progressBar.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(getApplicationContext(), "No such document", Toast.LENGTH_LONG).show();
@@ -111,7 +116,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         });
 
         //Comment lsit
-        mFireStore.collection("discussion").document(Config.DOC_ID).collection("comments").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFireStore.collection("discussions").document(Config.DOC_ID).collection("comments").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if(e != null){

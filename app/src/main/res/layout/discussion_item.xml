@@ -9,7 +9,7 @@
         android:id="@+id/discussion_item_card"
         android:layout_below="@+id/recent_txt"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
         android:elevation="4dp"
@@ -81,6 +81,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/discussion_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10 hours ago"
@@ -92,26 +93,39 @@
             </LinearLayout>
             
             <TextView
-                android:id="@+id/discussion_body"
+                android:id="@+id/discussion_title"
                 android:layout_below="@+id/topic_layout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:text="Discussion Body"
+                android:textSize="15dp"
                 android:textColor="@color/black"
                 android:layout_marginTop="7dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:id="@+id/home_discussion_image"
+                android:layout_below="@id/discussion_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"
                 android:id="@+id/seemore"
-                android:layout_below="@+id/discussion_body"
+                android:layout_below="@+id/discussion_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="See More"
                 android:gravity="right"
                 android:textSize="13dp"
                 />
+
+
+
 
 
 

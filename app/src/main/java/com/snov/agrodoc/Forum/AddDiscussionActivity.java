@@ -117,7 +117,16 @@ public class AddDiscussionActivity extends AppCompatActivity {
         AddNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadImageToFirestore();
+
+                if(DiscussionTitle.getText().toString()!=null && DiscussionBody.getText().toString()!=null && DiscussionType !=null){
+                    if(filePath != null){
+                        UploadImageToFirestore();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Select Image", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Fill All fields", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -208,7 +217,7 @@ public class AddDiscussionActivity extends AppCompatActivity {
 
 
 
-        mFirestore.collection("discussion").add(DiscussionMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        mFirestore.collection("discussions").add(DiscussionMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Toast.makeText(getApplicationContext(), "Discussion Added", Toast.LENGTH_LONG).show();

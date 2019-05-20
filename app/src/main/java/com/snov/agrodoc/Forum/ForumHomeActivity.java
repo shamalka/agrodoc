@@ -1,7 +1,9 @@
 package com.snov.agrodoc.Forum;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,8 +40,13 @@ import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ForumHomeActivity extends AppCompatActivity {
 
@@ -64,6 +73,10 @@ public class ForumHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum_home);
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading Data..");
+        progressDialog.show();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -94,9 +107,10 @@ public class ForumHomeActivity extends AppCompatActivity {
 
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
 
-        mFireStore.collection("discussion").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFireStore.collection("discussions").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                progressDialog.dismiss();
                 if(e != null){
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -105,13 +119,19 @@ public class ForumHomeActivity extends AppCompatActivity {
                     if(doc.getType() == DocumentChange.Type.ADDED){
                         String name = doc.getDocument().getString("user_name");
                         String type = doc.getDocument().getString("type");
+                        String title = doc.getDocument().getString("title");
                         String body = doc.getDocument().getString("body");
+                        String timestamp = doc.getDocument().getString("timestamp");
+                        String imageUrl = doc.getDocument().getString("image_url");
                         String DocID = doc.getDocument().getId();
 
                         Discussion discussion = new Discussion();
                         discussion.setUserName(name);
                         discussion.setType(type);
+                        discussion.setTitle(title);
                         discussion.setBody(body);
+                        discussion.setDate(timestamp);
+                        discussion.setImageUrl(imageUrl);
                         discussion.setDocID(DocID);
 
 //                        Log.d(TAG, "Name: " + name);
@@ -124,6 +144,7 @@ public class ForumHomeActivity extends AppCompatActivity {
 //                        DocIDList.add(DocID);
 
                         DiscussionArray.add(discussion);
+
                     }
                 }
 
@@ -177,7 +198,19 @@ public class ForumHomeActivity extends AppCompatActivity {
 
             viewHolder.user_name.setText(DiscussionArrayList.get(position).getUserName());
             viewHolder.discussion_type.setText(DiscussionArrayList.get(position).getType());
-            viewHolder.discussion_body.setText(DiscussionArrayList.get(position).getBody());
+            viewHolder.discussion_title.setText(DiscussionArrayList.get(position).getTitle());
+            Picasso.get().load(DiscussionArrayList.get(position).getImageUrl()).into(viewHolder.image);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            String dateStr = DiscussionArrayList.get(position).getDate();
+            try {
+                Date date = simpleDateFormat.parse(dateStr);
+                String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+
+                viewHolder.discussion_time.setText(niceDateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             viewHolder.Card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -214,14 +247,18 @@ public class ForumHomeActivity extends AppCompatActivity {
         class ViewHolder{
             TextView user_name;
             TextView discussion_type;
-            TextView discussion_body;
+            TextView discussion_title;
+            TextView discussion_time;
+            ImageView image;
             CardView Card;
 
 
             ViewHolder(View v){
                 user_name = (TextView)v.findViewById(R.id.username);
                 discussion_type = (TextView)v.findViewById(R.id.discussion_type);
-                discussion_body = (TextView)v.findViewById(R.id.discussion_body);
+                discussion_title = (TextView)v.findViewById(R.id.discussion_title);
+                discussion_time = (TextView)v.findViewById(R.id.discussion_time);
+                image = (ImageView)v.findViewById(R.id.home_discussion_image);
                 Card = (CardView)v.findViewById(R.id.discussion_item_card);
 
             }

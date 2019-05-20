@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void ShowDiscussionList() {
         FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
-        mFireStore.collection("discussion").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFireStore.collection("discussions").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if(e != null){
@@ -101,13 +101,17 @@ public class ProfileActivity extends AppCompatActivity {
                     if(doc.getType() == DocumentChange.Type.ADDED && LoggedUserID.equals(doc.getDocument().getString("user_id"))){
                         String name = doc.getDocument().getString("user_name");
                         String type = doc.getDocument().getString("type");
+                        String title = doc.getDocument().getString("title");
                         String body = doc.getDocument().getString("body");
+                        String imageUrl = doc.getDocument().getString("image_url");
                         String DocID = doc.getDocument().getId();
 
                         Discussion discussion = new Discussion();
                         discussion.setUserName(name);
                         discussion.setType(type);
+                        discussion.setTitle(title);
                         discussion.setBody(body);
+                        discussion.setImageUrl(imageUrl);
                         discussion.setDocID(DocID);
 
 //                        Log.d(TAG, "Name: " + name);
@@ -173,7 +177,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             viewHolder.user_name.setText(DiscussionArrayList.get(position).getUserName());
             viewHolder.discussion_type.setText(DiscussionArrayList.get(position).getType());
-            viewHolder.discussion_body.setText(DiscussionArrayList.get(position).getBody());
+            viewHolder.discussion_title.setText(DiscussionArrayList.get(position).getTitle());
+            Picasso.get().load(DiscussionArrayList.get(position).getImageUrl()).into(viewHolder.image);
 
             viewHolder.Card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -210,14 +215,16 @@ public class ProfileActivity extends AppCompatActivity {
         class ViewHolder{
             TextView user_name;
             TextView discussion_type;
-            TextView discussion_body;
+            TextView discussion_title;
+            ImageView image;
             CardView Card;
 
 
             ViewHolder(View v){
                 user_name = (TextView)v.findViewById(R.id.username);
                 discussion_type = (TextView)v.findViewById(R.id.discussion_type);
-                discussion_body = (TextView)v.findViewById(R.id.discussion_body);
+                discussion_title = (TextView)v.findViewById(R.id.discussion_title);
+                image = (ImageView)v.findViewById(R.id.home_discussion_image);
                 Card = (CardView)v.findViewById(R.id.discussion_item_card);
 
             }

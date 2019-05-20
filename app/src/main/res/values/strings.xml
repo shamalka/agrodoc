@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AgroDoc</string>
-    <string name="title_activity_discussion_details">DiscussionDetailsActivity</string>
+    <string name="title_activity_discussion_details"></string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

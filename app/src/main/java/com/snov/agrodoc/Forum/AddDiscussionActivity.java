@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,8 +100,8 @@ public class AddDiscussionActivity extends AppCompatActivity {
         });
 
         //Get timestamp
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
-        format = simpleDateFormat.format(new Date());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        format = simpleDateFormat.format(Calendar.getInstance().getTime());
         Toast.makeText(this,"Time " + format,Toast.LENGTH_SHORT).show();
 
         DiscussionTitle = (EditText)findViewById(R.id.question_text);
@@ -127,6 +128,7 @@ public class AddDiscussionActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(), "Fill All fields", Toast.LENGTH_LONG).show();
                 }
+                Toast.makeText(getApplicationContext(),"Time " + format,Toast.LENGTH_SHORT).show();
             }
         });
 

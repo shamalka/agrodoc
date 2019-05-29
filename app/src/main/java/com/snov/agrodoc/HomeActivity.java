@@ -10,9 +10,11 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.snov.agrodoc.DiseaseDetection.DetectorHomeActivity;
+import com.snov.agrodoc.DiseaseDetection.DiseaseDetailsActivity;
 import com.snov.agrodoc.DiseaseDetection.UploadImageActivity;
 import com.snov.agrodoc.Forum.ForumHomeActivity;
 import com.snov.agrodoc.Market.MarketHomeActivity;
+import com.snov.agrodoc.classification.ClassifierActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -53,12 +55,12 @@ public class HomeActivity extends AppCompatActivity {
        // Toast.makeText(getApplicationContext(), "Happy New Year", Toast.LENGTH_SHORT).show();
 
         GotoMarket.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, MarketHomeActivity.class);
+            Intent intent = new Intent(HomeActivity.this, ClassifierActivity.class);
             startActivity(intent);
         });
 
         ImageUpload.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, DetectorHomeActivity.class);
+            Intent intent = new Intent(HomeActivity.this, DiseaseDetailsActivity.class);
             startActivity(intent);
         });
 

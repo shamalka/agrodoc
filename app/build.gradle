@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.snov.agrodoc"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    aaptOptions {
+        noCompress "tflite"
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -44,6 +47,14 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.3.1'
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+
+    implementation 'com.github.shamalka:Pretty-TimeAgo-android-library:1.0.0'
+
+    implementation'com.github.therealshabi:AutoImageFlipper:v1.4.1'
+
+    // Build off of nightly TensorFlow Lite
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly'
 
     //Android Upload service
     implementation 'net.gotev:uploadservice:2.1'

@@ -38,6 +38,7 @@ import com.snov.agrodoc.Models.Discussion;
 import com.snov.agrodoc.Models.Product;
 import com.snov.agrodoc.R;
 import com.snov.agrodoc.Utilities.Config;
+import com.snov.timeagolibrary.PrettyTimeAgo;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -201,16 +202,37 @@ public class ForumHomeActivity extends AppCompatActivity {
             viewHolder.discussion_title.setText(DiscussionArrayList.get(position).getTitle());
             Picasso.get().load(DiscussionArrayList.get(position).getImageUrl()).into(viewHolder.image);
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            String dateStr = DiscussionArrayList.get(position).getDate();
+            //Initialize date format
+            SimpleDateFormat desiredFormat = new SimpleDateFormat(
+                    "yyyy.MM.dd G 'at' HH:mm:ss z");
+            long dateInMillis = 0;
             try {
-                Date date = simpleDateFormat.parse(dateStr);
-                String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+                //Pass your timestamp and SimpleDateFormat object to PrettyTimeAgo.timesampToMilli(timestamp , dateformat) method.
+                //It will return timestamp in milliseconds as a long.
+                dateInMillis = PrettyTimeAgo.timestampToMilli(DiscussionArrayList.get(position).getDate(), desiredFormat);
 
-                viewHolder.discussion_time.setText(niceDateStr);
+                //Current time in milliseconds
+                long now = System.currentTimeMillis();
+
+                //PrettyTimeAgo.getTimeAgo(pasttime_in_milliseconds) method returns ago time relative to current time.
+                String TimeAgo = PrettyTimeAgo.getTimeAgo(dateInMillis);
+
+                viewHolder.discussion_time.setText(TimeAgo);
             } catch (ParseException e) {
+
                 e.printStackTrace();
             }
+
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//            String dateStr = DiscussionArrayList.get(position).getDate();
+//            try {
+//                Date date = simpleDateFormat.parse(dateStr);
+//                String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+//
+//                viewHolder.discussion_time.setText(niceDateStr);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
 
             viewHolder.Card.setOnClickListener(new View.OnClickListener() {
                 @Override

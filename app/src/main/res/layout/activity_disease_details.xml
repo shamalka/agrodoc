@@ -17,14 +17,42 @@
     </android.support.v4.view.ViewPager>
 
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/compare_image_card"
+        android:layout_below="@+id/slider_view_pager"
+        app:cardCornerRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_margin="10dp">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/compare_image"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--/>-->
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/compare_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v7.widget.CardView>
 
 
 
-
-
+    <Button
+        android:layout_below="@+id/compare_image_card"
+        android:id="@+id/goback_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:layout_centerHorizontal="true"/>
 
 
     <LinearLayout
+        android:id="@+id/description_layout"
         android:layout_below="@+id/slider_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,11 +84,13 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/solutions_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Solutions"/>
 
             <Button
+                android:id="@+id/compare_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Compare"/>
